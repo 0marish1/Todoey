@@ -11,7 +11,7 @@ import UIKit
 class TodoListViewController: UITableViewController {
 
     
-    let itemArray = ["Find Milk", "Buy Eggos", "Destroy Demogorgon"]
+    var itemArray = ["Find Milk", "Buy Eggos", "Destroy Demogorgon"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,10 +69,58 @@ class TodoListViewController: UITableViewController {
         
         // The dim light that comes on when you tap on one of the options. 
         tableView.deselectRow(at: indexPath, animated: true)
-        
+    }
     
+    
+    
+    ////////////////////////////////////////// Add Button ////////////////////////////////////////////////////
+    
+    
+    //Mark - Add New Items
+    
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        /// last step. making all the below accessable outside its brackets
+        var textField = UITextField()
+        
+        
+        // pop up or UIAlrert controller will show when add button pressed
+        
+        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+
+            // what will happen once the user clicks the add button on our UIAlert
+            
+           self.itemArray.append(textField.text!)
+            
+            //////////////////// reload the screen to show new cell that user added to todo list/////////////////////
+            self.tableView.reloadData()
+            
+        }
+        
+        //////////////////// adding a text field ///////////////////////////////////
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        
+        // show alert
+        
+        present(alert, animated: true, completion: nil)
         
     }
+    
+    
+    
+    
+    
+    
+    
 }
 
 
