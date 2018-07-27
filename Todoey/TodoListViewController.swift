@@ -13,8 +13,16 @@ class TodoListViewController: UITableViewController {
     
     var itemArray = ["Find Milk", "Buy Eggos", "Destroy Demogorgon"]
     
+    //interface for the users defauld database where you store key valuse pares
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //retreav data from where it is saved.
+        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+            itemArray = items
+        }
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -92,11 +100,13 @@ class TodoListViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
 
             // what will happen once the user clicks the add button on our UIAlert
+            self.itemArray.append(textField.text!)
             
-           self.itemArray.append(textField.text!)
+            //save updated item array to the user default
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             
             //////////////////// reload the screen to show new cell that user added to todo list/////////////////////
-            self.tableView.reloadData()
+           self.tableView.reloadData()
             
         }
         
